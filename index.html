@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>காவல் நலம் · Kaaval Nalam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1e2761; --navy-2:#2b3680; --khaki:#cdb98a; --khaki-soft:#eee6d1; --saffron:#e8a33d;
+  --teal:#2f7d7a; --red:#b8433a; --green:#3f7d58;
+  --bg:#e9edf4; --surface:#ffffff; --surface-2:#f4f6fa; --ink:#1a1f33; --muted:#5a6380; --line:#d7dce8;
+  --shadow:0 1px 0 rgba(30,39,97,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1230; --surface:#161d45; --surface-2:#1d2552; --ink:#eef0f8; --muted:#aab2cf; --line:#2c3566;
+    --khaki-soft:#3a3526; --navy:#c9d1f5; --navy-2:#9fb0f0; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1230; --surface:#161d45; --surface-2:#1d2552; --ink:#eef0f8; --muted:#aab2cf; --line:#2c3566;
+  --khaki-soft:#3a3526; --navy:#c9d1f5; --navy-2:#9fb0f0; --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Mukta Malar","Noto Sans Tamil","Nirmala UI","Latha",system-ui,sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px;border-radius:6px}
+.app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
+@media (min-width:760px){ .app{margin:24px auto;min-height:calc(100vh - 48px);border-radius:28px;overflow:hidden;border:1px solid var(--line)} }
+
+/* Header: shoulder-badge band */
+.band{background:#1e2761;color:#fff;padding:14px 18px 0;position:relative}
+.band-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.star{width:34px;height:34px;flex:none}
+.brand-ta{font-weight:800;font-size:22px;line-height:1.1;letter-spacing:.2px}
+.brand-en{font-size:12.5px;color:#cdb98a;letter-spacing:.6px}
+.lang{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:3px}
+.lang button{border:0;background:transparent;color:#dfe4f7;font-size:13px;padding:5px 10px;border-radius:999px;font-weight:600}
+.lang button[aria-pressed="true"]{background:#cdb98a;color:#1e2761}
+.stripe{height:10px;margin:12px -18px 0;background:repeating-linear-gradient(90deg,#cdb98a 0 22px,#b9a371 22px 24px)}
+.notice{font-size:12.5px;color:var(--muted);background:var(--surface-2);border-bottom:1px solid var(--line);padding:7px 18px}
+
+main{flex:1;padding:18px 16px 110px}
+h1{font-size:25px;line-height:1.25;margin:4px 0 6px;font-weight:800;color:var(--navy)}
+h2{font-size:19px;margin:22px 0 8px;font-weight:700;color:var(--navy)}
+p{margin:0 0 10px}
+.sub{display:block;font-size:.82em;color:var(--muted);font-weight:500;line-height:1.35}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+.greet{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.moods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mood{border:2px solid var(--line);background:var(--surface-2);border-radius:14px;padding:10px 6px;text-align:center;font-weight:700}
+.mood svg{display:block;margin:0 auto 4px}
+.mood[aria-pressed="true"]{border-color:var(--saffron);background:var(--khaki-soft)}
+.moodmsg{margin-top:12px;padding:10px 12px;border-left:4px solid var(--teal);background:var(--surface-2);border-radius:0 10px 10px 0}
+
+.list{display:flex;flex-direction:column;gap:0;margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.row{display:flex;align-items:center;gap:12px;padding:14px 14px;border:0;border-bottom:1px solid var(--line);background:transparent;text-align:left;width:100%}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--surface-2)}
+.ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;color:#fff}
+.row .t{font-weight:700;display:block}
+.chev{margin-left:auto;color:var(--muted);flex:none}
+
+.lock{display:flex;gap:8px;align-items:flex-start;margin-top:14px;font-size:14px;color:var(--green)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:13px 16px;font-weight:700;background:#1e2761;color:#fff;width:100%;text-decoration:none;text-align:center}
+.btn.sec{background:var(--surface);color:var(--navy);border:2px solid var(--line)}
+.btn.teal{background:var(--teal)} .btn.red{background:var(--red)} .btn.saff{background:var(--saffron);color:#1e2761}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.stack{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
+.crisis{background:#fbeceb;border:2px solid var(--red);color:#4a1712}
+:root[data-theme="dark"] .crisis{background:#3a1a1a;color:#ffdcd8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .crisis{background:#3a1a1a;color:#ffdcd8}}
+.crisis h2{color:var(--red);margin-top:0}
+
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 14px}
+.progress i{display:block;height:100%;background:var(--saffron)}
+.q{font-size:20px;font-weight:700;line-height:1.35;margin:6px 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:11px 14px;text-align:left;display:flex;gap:10px;align-items:center}
+.opt[aria-pressed="true"]{border-color:var(--navy);background:var(--khaki-soft)}
+.opt .n{width:28px;height:28px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:800;font-size:14px;flex:none;border:1px solid var(--line)}
+
+.gauge{display:flex;align-items:center;gap:16px}
+.gauge svg{flex:none}
+.score{font-size:42px;font-weight:800;line-height:1;color:var(--navy)}
+
+label.f{display:block;font-weight:700;margin:14px 0 6px}
+input[type=number],input[type=text],select,textarea{width:100%;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--surface)}
+input[type=range]{width:100%;accent-color:#e8a33d}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-weight:600;font-size:15px}
+.chip[aria-pressed="true"]{border-color:var(--navy);background:var(--khaki-soft)}
+
+.chart{width:100%;height:auto;display:block;margin-top:8px}
+.weeks{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:10px}
+.wk{aspect-ratio:1;border-radius:10px;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;margin-top:8px;color:var(--muted)}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+.breath{display:grid;place-items:center;margin:18px 0}
+.circle{width:210px;height:210px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#f4c77e,#e8a33d 60%,#c9862a);display:grid;place-items:center;color:#1e2761;font-weight:800;font-size:22px;text-align:center;transition:transform 4s linear;transform:scale(.62);box-shadow:0 0 0 14px rgba(232,163,61,.18)}
+.circle.big{transform:scale(1)}
+@media (prefers-reduced-motion: reduce){.circle{transition:none}}
+
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi .v{font-size:28px;font-weight:800;line-height:1.1}
+.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%}
+.urow{padding:10px 0;border-bottom:1px solid var(--line)}
+.urow:last-child{border-bottom:0}
+.tag{display:inline-block;font-size:12.5px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--khaki-soft);color:var(--ink)}
+
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#1e2761;color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;z-index:50;max-width:90vw;text-align:center}
+
+nav.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;z-index:40;pointer-events:none}
+nav.tabs .in{pointer-events:auto;max-width:480px;width:100%;display:grid;grid-template-columns:repeat(5,1fr);background:var(--surface);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+nav.tabs button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;font-size:12px;font-weight:600;color:var(--muted);line-height:1.15}
+nav.tabs button[aria-current="page"]{color:var(--navy)}
+nav.tabs button[aria-current="page"] svg{color:#e8a33d}
+nav.tabs .help-tab svg{color:var(--red)}
+.back{border:0;background:transparent;color:var(--navy);font-weight:700;padding:0;margin-bottom:6px;display:inline-flex;gap:4px;align-items:center}
+ul.tips{padding-left:20px;margin:6px 0}
+ul.tips li{margin-bottom:8px}
+a.tel{color:inherit}
+.ref{font-size:26px;font-weight:800;letter-spacing:2px;color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="band">
+    <div class="band-top">
+      <div class="brand">
+        <svg class="star" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2l4.6 9.4 10.4 1.5-7.5 7.3 1.8 10.3L20 25.6 10.7 30.5l1.8-10.3L5 12.9l10.4-1.5z" fill="#cdb98a"/><circle cx="20" cy="18" r="4.2" fill="#1e2761"/></svg>
+        <div><div class="brand-ta">காவல் நலம்</div><div class="brand-en">KAAVAL NALAM</div></div>
+      </div>
+      <div class="lang" role="group" aria-label="Language / மொழி">
+        <button data-lang="ta">தமிழ்</button><button data-lang="en">EN</button><button data-lang="both">இரு</button>
+      </div>
+    </div>
+    <div class="stripe" aria-hidden="true"></div>
+  </header>
+  <div class="notice" id="notice"></div>
+  <main id="main" tabindex="-1"></main>
+</div>
+<nav class="tabs" aria-label="Main"><div class="in" id="tabs"></div></nav>
+
+<script>
+/* ---------------- Text (Tamil / English) ---------------- */
+const T={
+ notice:["கல்வி நோக்கிலான மாதிரிச் செயலி — அதிகாரப்பூர்வ துறைச் செயலி அல்ல. உங்கள் பதில்கள் இந்தச் சாதனத்தில் மட்டுமே சேமிக்கப்படும்.","Academic prototype — not an official departmental app. Your answers are stored only on this device."],
+ navHome:["முகப்பு","Home"], navCheck:["மதிப்பீடு","Self-check"], navHelp:["உதவி","Get help"], navLog:["பதிவேடு","Tracker"], navMore:["மேலும்","More"],
+ greet:["வணக்கம்!","Vanakkam!"], howToday:["இன்று நீங்கள் எப்படி உணர்கிறீர்கள்?","How are you feeling today?"],
+ good:["நன்றாக","Good"], okay:["பரவாயில்லை","Okay"], low:["சோர்வாக","Low"],
+ moodGood:["மகிழ்ச்சி. இன்றைய ஓய்வு நேரத்தையும் பாதுகாத்துக் கொள்ளுங்கள்.","Glad to hear it. Protect some rest time today too."],
+ moodOkay:["சில நாட்கள் இப்படித்தான் இருக்கும். இரண்டு நிமிட மூச்சுப் பயிற்சி உதவலாம்.","Some days are like this. A two-minute breathing exercise may help."],
+ moodLow:["இதைச் சொன்னதற்கு நன்றி. சுய மதிப்பீடு செய்யலாம், அல்லது இப்போதே யாரிடமாவது பேசலாம்.","Thank you for saying so. You can take the self-check, or talk to someone right now."],
+ tileCheck:["நல்வாழ்வு சுய மதிப்பீடு","Well-being self-check"], tileCheckS:["2 நிமிடம் · பெயர் தேவையில்லை","2 minutes · no name needed"],
+ tileSleep:["தூக்கம் & பணி நேரப் பதிவு","Sleep and duty log"], tileSleepS:["தினசரி ஒரு நிமிடம்","One minute a day"],
+ tileTalk:["யாரிடமாவது பேசுங்கள்","Talk to someone"], tileTalkS:["மகிழ்ச்சி · டெலி-மனஸ் 14416","Magilchi · Tele-MANAS 14416"],
+ tileOff:["வார விடுமுறைப் பதிவேடு","Weekly-off tracker"], tileOffS:["உங்கள் பதிவு மட்டும்","Your own record only"],
+ tileIncident:["நெருக்கடி நிகழ்வுக்குப் பின் நலம் விசாரிப்பு","Critical-incident check-in"], tileIncidentS:["கடந்த 72 மணி நேரத்தில் நடந்திருந்தால்","If it happened in the last 72 hours"],
+ tileBreath:["மூச்சுப் பயிற்சி","Breathing exercise"], tileBreathS:["4-4-4-4 சதுர மூச்சு","4-4-4-4 box breathing"],
+ tileFamily:["குடும்பப் பகுதி","Family corner"], tileFamilyS:["மனைவி/கணவர், குடும்பத்தினருக்கு","For spouses and families"],
+ tileSup:["மேற்பார்வையாளர் பார்வை","Supervisor view"], tileSupS:["தொகுப்புத் தரவு மட்டும் · மாதிரித் தரவு","Aggregate only · demo data"],
+ tilePriv:["ரகசியத்தன்மை & தரவு","Privacy and your data"], tilePrivS:["உங்கள் தகவல் எப்படிப் பாதுகாக்கப்படுகிறது","How your information is protected"],
+ lockLine:["பணிப் பதிவேடு, ஒழுங்கு நடவடிக்கை அல்லது பதவி உயர்வுக் கோப்புடன் இணைக்கப்படவில்லை.","Not linked to service records, discipline or promotion files."],
+ back:["பின்செல்","Back"],
+ // WHO-5
+ chkTitle:["நல்வாழ்வு சுய மதிப்பீடு","Well-being self-check"],
+ chkIntro:["உலக சுகாதார நிறுவனத்தின் WHO-5 நல்வாழ்வுக் குறியீட்டை அடிப்படையாகக் கொண்ட 5 கேள்விகள். சரியோ தவறோ இல்லை — உண்மையாகப் பதிலளியுங்கள்.","Five questions based on the WHO-5 Well-Being Index. There are no right or wrong answers — answer honestly."],
+ start:["தொடங்கு","Start"],
+ lastTwo:["கடந்த இரண்டு வாரங்களில்…","Over the last two weeks…"],
+ q1:["நான் மகிழ்ச்சியாகவும் உற்சாகமாகவும் இருந்தேன்","I have felt cheerful and in good spirits"],
+ q2:["நான் அமைதியாகவும் நிதானமாகவும் இருந்தேன்","I have felt calm and relaxed"],
+ q3:["நான் சுறுசுறுப்பாகவும் ஆற்றலுடனும் இருந்தேன்","I have felt active and vigorous"],
+ q4:["நான் புத்துணர்ச்சியுடனும் நன்கு ஓய்வெடுத்த உணர்வுடனும் விழித்தேன்","I woke up feeling fresh and rested"],
+ q5:["என் அன்றாட வாழ்க்கை எனக்கு ஆர்வமூட்டும் விஷயங்களால் நிறைந்திருந்தது","My daily life has been filled with things that interest me"],
+ o5:["எல்லா நேரமும்","All of the time"], o4:["பெரும்பாலான நேரம்","Most of the time"], o3:["பாதிக்கும் மேலான நேரம்","More than half of the time"],
+ o2:["பாதிக்கும் குறைவான நேரம்","Less than half of the time"], o1:["சில நேரங்களில்","Some of the time"], o0:["எப்போதும் இல்லை","At no time"],
+ qSafety:["கடந்த இரண்டு வாரங்களில், இறந்துவிடுவது நல்லது என்றோ, உங்களையே காயப்படுத்திக்கொள்ள வேண்டும் என்றோ எண்ணங்கள் தோன்றியதா?","In the last two weeks, have you had thoughts that you would be better off dead, or of hurting yourself?"],
+ yes:["ஆம்","Yes"], no:["இல்லை","No"], noSay:["சொல்ல விரும்பவில்லை","Prefer not to say"],
+ next:["அடுத்து","Next"], prev:["முந்தையது","Previous"], seeResult:["முடிவைக் காண்க","See my result"],
+ qOf:["கேள்வி","Question"],
+ crisisH:["இதை நீங்கள் தனியாக எதிர்கொள்ள வேண்டியதில்லை","You don't have to face this alone"],
+ crisisP:["தயவுசெய்து இப்போதே யாரிடமாவது பேசுங்கள். டெலி-மனஸ் 24 மணி நேரமும் இலவசம்; தமிழில் பேசலாம்.","Please talk to someone right now. Tele-MANAS is free and open 24 hours, and you can speak in Tamil."],
+ crisisDanger:["உடனடி ஆபத்து இருந்தால் 112 ஐ அழைக்கவும் அல்லது அருகிலுள்ள மருத்துவமனைக்குச் செல்லவும். நம்பிக்கைக்குரிய ஒருவரை உங்களுடன் இருக்கச் சொல்லுங்கள்.","If you are in immediate danger, call 112 or go to the nearest hospital. Ask someone you trust to stay with you."],
+ callTM:["டெலி-மனஸ் 14416 அழைக்கவும்","Call Tele-MANAS 14416"], call112:["அவசர உதவி 112","Emergency 112"],
+ resTitle:["உங்கள் முடிவு","Your result"], outOf:["100 இல்","out of 100"],
+ bandGood:["உங்கள் நல்வாழ்வு நல்ல நிலையில் உள்ளது","Your well-being looks good"],
+ bandGoodP:["இதைத் தொடர்ந்து காக்க: வார விடுமுறையில் முழுமையாக ஓய்வெடுங்கள், குடும்பத்துடன் நேரம் செலவிடுங்கள், இரண்டு வாரங்களுக்கு ஒருமுறை மீண்டும் மதிப்பிடுங்கள்.","To keep it that way: rest fully on your weekly off, spend time with family, and check again in two weeks."],
+ bandMid:["உங்கள் நல்வாழ்வு இருக்க வேண்டியதைவிடக் குறைவாக உள்ளது","Your well-being is lower than it should be"],
+ bandMidP:["இது பணிச்சுமை அல்லது தூக்கமின்மையால் ஏற்படலாம். ஆலோசகருடன் ஒருமுறை பேசுவது உதவக்கூடும் — இது பலவீனம் அல்ல, பொறுப்பான செயல்.","This can come from workload or poor sleep. One conversation with a counsellor can help — it is a responsible step, not a weakness."],
+ bandLow:["நீங்கள் கடினமான காலத்தைக் கடந்து கொண்டிருக்கலாம்","You may be going through a difficult time"],
+ bandLowP:["உங்கள் பதில்கள் கவனம் தேவை எனக் காட்டுகின்றன. விரைவில் ஆலோசகரிடம் பேசுமாறு பரிந்துரைக்கிறோம். ரகசிய அழைப்பைக் கோரலாம் அல்லது டெலி-மனஸை அழைக்கலாம்.","Your answers suggest you need some support. We recommend speaking to a counsellor soon. You can request a confidential call-back or call Tele-MANAS."],
+ notDiag:["இது முன்கூட்டிய மதிப்பீட்டு உதவி மட்டுமே; நோய் கண்டறிதல் அல்ல.","This is a screening aid only, not a diagnosis."],
+ history:["முந்தைய மதிப்பீடுகள்","Previous self-checks"], none:["இன்னும் பதிவுகள் இல்லை.","No entries yet."],
+ reqCall:["ரகசிய அழைப்பைக் கோரவும்","Request a confidential call-back"], doBreath:["மூச்சுப் பயிற்சி செய்யுங்கள்","Try the breathing exercise"], home:["முகப்புக்குச் செல்","Go to home"],
+ // Help
+ helpTitle:["உதவி பெறுங்கள்","Get help"], helpIntro:["உதவி கேட்பது தொழில்முறைப் பொறுப்பு. இங்குள்ள எந்த எண்ணையும் நீங்கள் நேரடியாக அழைக்கலாம்.","Asking for help is part of doing the job well. You can call any of these numbers directly."],
+ tmT:["டெலி-மனஸ் — 14416","Tele-MANAS — 14416"], tmS:["தேசிய மனநல உதவி எண் · 24 மணி நேரம் · இலவசம் · தமிழ்","National mental-health helpline · 24 hours · free · Tamil available"],
+ magT:["மகிழ்ச்சி உளவியல் ஆதரவுத் திட்டம்","Magilchi psychosocial support"], magS:["தொடர்பு எண்: தற்போதைய துறைச் சுற்றறிக்கையின்படி","Contact: as per the current departmental circular"],
+ eT:["அவசர உதவி — 112","Emergency — 112"], eS:["உயிருக்கு உடனடி ஆபத்து","Immediate danger to life"],
+ amT:["ஆம்புலன்ஸ் — 108","Ambulance — 108"], amS:["மருத்துவ அவசரம்","Medical emergency"],
+ hlT:["சுகாதார உதவி எண் — 104","Health helpline — 104"], hlS:["தமிழ்நாடு அரசு சுகாதாரத் தகவல்","Tamil Nadu health information and guidance"],
+ cbTitle:["ரகசிய அழைப்புக் கோரிக்கை","Confidential call-back request"],
+ cbIntro:["உங்கள் பெயர் தேவையில்லை. ஒரு புனைப்பெயர் மற்றும் அழைக்க வசதியான நேரத்தை மட்டும் குறிப்பிடுங்கள்.","Your name is not required. Give an alias and a convenient time only."],
+ alias:["புனைப்பெயர்","Alias"], aliasPh:["உதா: நட்சத்திரம்","e.g. Natchathiram"],
+ who:["யாரிடம் பேச விரும்புகிறீர்கள்?","Who would you like to talk to?"],
+ whoCoun:["மகிழ்ச்சி ஆலோசகர்","Magilchi counsellor"], whoWO:["நல அலுவலர்","Wellness Officer"], whoPeer:["சக ஆதரவாளர்","Peer supporter"],
+ when:["வசதியான நேரம்","Convenient time"], m:["காலை","Morning"], a:["மதியம்","Afternoon"], e:["மாலை","Evening"], nt:["இரவு (பணி முடிந்த பின்)","Night (after duty)"],
+ topic:["பேச விரும்பும் விஷயம் (விருப்பமானால்)","What it's about (optional)"],
+ tWork:["பணிச்சுமை","Workload"], tSleep:["தூக்கம்","Sleep"], tFam:["குடும்பம்","Family"], tMoney:["பணப் பிரச்சினை","Money"], tAlc:["மது / கைபேசி விளையாட்டு","Alcohol / online games"], tInc:["நெருக்கடி நிகழ்வு","Critical incident"],
+ sendReq:["கோரிக்கையை அனுப்பு","Send request"],
+ reqDone:["கோரிக்கை பதிவு செய்யப்பட்டது","Request recorded"],
+ reqRef:["உங்கள் குறிப்பு எண் — இதை மட்டும் சொன்னால் போதும்:","Your reference number — this is all you need to quote:"],
+ protoNote:["இந்த மாதிரிச் செயலியில் கோரிக்கை எங்கும் அனுப்பப்படுவதில்லை. அவசரமெனில் 14416 ஐ அழைக்கவும்.","In this prototype the request is not sent anywhere. If it is urgent, call 14416."],
+ // Log
+ logTitle:["என் பதிவேடு","My tracker"],
+ sleepH:["தூக்கம் & பணி நேரம்","Sleep and duty hours"],
+ slept:["நேற்றிரவு தூங்கிய நேரம் (மணி)","Hours slept last night"], quality:["தூக்கத்தின் தரம்","Sleep quality"],
+ qPoor:["மிக மோசம்","Very poor"], qGood:["மிக நன்று","Very good"],
+ duty:["இன்றைய பணி நேரம் (மணி)","Duty hours today"], saveEntry:["இன்றைய பதிவைச் சேமி","Save today's entry"], saved:["சேமிக்கப்பட்டது","Saved"],
+ last7:["கடைசி 7 பதிவுகள்","Last 7 entries"], lgSleep:["தூக்கம்","Sleep"], lgDuty:["பணி நேரம்","Duty"],
+ avgSleep:["சராசரித் தூக்கம்","Average sleep"], avgDuty:["சராசரிப் பணி நேரம்","Average duty"], hrs:["மணி","hrs"],
+ sleepWarn:["கடந்த பதிவுகளில் சராசரித் தூக்கம் 6 மணிக்கும் குறைவு. இது தொடர்ந்தால் மருத்துவ அலுவலரிடம் அல்லது ஆலோசகரிடம் பேசுங்கள்.","Your recent average sleep is under 6 hours. If this continues, speak to the medical officer or a counsellor."],
+ offH:["வார விடுமுறை","Weekly off"], offQ:["இந்த வாரம் உங்களுக்கு வார விடுமுறை கிடைத்ததா?","Did you get your weekly off this week?"],
+ offYes:["கிடைத்தது","Received"], offComp:["மாற்று விடுப்பு","Compensatory off"], offNo:["கிடைக்கவில்லை","Not received"],
+ offRate:["கடந்த 8 வாரங்களில் ஓய்வு கிடைத்த வாரங்கள்","Weeks with rest in the last 8 weeks"],
+ offNote:["G.O. (Ms.) No. 469 (2021) — தலைமைக் காவலர் நிலை வரை கட்டாய வார விடுமுறை. இந்தப் பதிவு உங்கள் சொந்தக் கணக்கு மட்டுமே.","G.O. (Ms.) No. 469 (2021) provides a compulsory weekly off up to Head Constable rank. This record is for your own reference only."],
+ wk:["வா","W"],
+ // Incident
+ incTitle:["நெருக்கடி நிகழ்வுக்குப் பின் நலம் விசாரிப்பு","Critical-incident check-in"],
+ incQ:["கடந்த 72 மணி நேரத்தில், பணியின்போது மன உளைச்சல் தரும் நிகழ்வில் நீங்கள் ஈடுபட்டீர்களா அல்லது அதை நேரில் கண்டீர்களா?","In the last 72 hours, were you involved in — or did you witness — a distressing incident on duty?"],
+ incType:["நிகழ்வின் வகை (விருப்பமானால்)","Type of incident (optional)"],
+ i1:["மரணம் / கடும் காயம்","Death or serious injury"], i2:["என் மீது வன்முறை","Violence against me"], i3:["குழந்தை தொடர்பான வழக்கு","Case involving a child"], i4:["சக ஊழியர் இழப்பு","Loss of a colleague"], i5:["விபத்து / பேரிடர்","Accident or disaster"], i6:["வேறு","Other"],
+ normalH:["முதல் சில நாட்களில் இவை இயல்பானவை","These reactions are normal in the first few days"],
+ normalL:[["தூங்குவதில் சிரமம் அல்லது கனவுகள்","நிகழ்வு மீண்டும் மீண்டும் நினைவுக்கு வருதல்","எரிச்சல், பதற்றம் அல்லது உணர்ச்சியற்ற நிலை","தனியாக இருக்க விரும்புதல்"],["Trouble sleeping or bad dreams","The event replaying in your mind","Irritability, feeling on edge, or feeling numb","Wanting to be alone"]],
+ normalP:["இவை பொதுவாகச் சில நாட்களில் குறையும். இரண்டு வாரங்களுக்கு மேல் நீடித்தாலோ, பணியையோ குடும்பத்தையோ பாதித்தாலோ உதவி நாடுங்கள்.","They usually ease within days. Seek help if they last more than two weeks or begin to affect duty or family."],
+ incWhat:["இப்போது என்ன செய்ய விரும்புகிறீர்கள்?","What would you like to do now?"],
+ incFine:["நான் நலமாக உள்ளேன் — 7 நாட்களில் மீண்டும் கேளுங்கள்","I'm fine — check with me again in 7 days"],
+ incWO:["நல அலுவலரிடமிருந்து அழைப்பு கோரவும்","Request a call from the Wellness Officer"],
+ incRemind:["7 நாட்களில் நினைவூட்டல் அமைக்கப்பட்டது (இந்தச் சாதனத்தில்)","Reminder set for 7 days (on this device)"],
+ incNoMsg:["சரி. எப்போது வேண்டுமானாலும் இங்கே திரும்பலாம்.","Okay. You can come back here at any time."],
+ incDue:["நலம் விசாரிப்பு நினைவூட்டல்: உங்கள் நெருக்கடி நிகழ்வுக்குப் பின் 7 நாட்கள் ஆகிவிட்டன. இப்போது எப்படி இருக்கிறீர்கள்?","Check-in reminder: it has been 7 days since your critical incident. How are you doing now?"],
+ // Breathing
+ brTitle:["சதுர மூச்சுப் பயிற்சி","Box breathing"],
+ brIntro:["பணியில் பதற்றமான சூழலுக்கு முன்போ பின்போ பயன்படுத்தலாம். 4 எண்ணிக்கை உள்ளிழுத்து, 4 நிறுத்தி, 4 வெளியே விட்டு, 4 நிறுத்துங்கள்.","Use it before or after a tense situation on duty. Breathe in for 4, hold for 4, breathe out for 4, hold for 4."],
+ bIn:["மூச்சை உள்ளிழுங்கள்","Breathe in"], bHold:["நிறுத்துங்கள்","Hold"], bOut:["மூச்சை வெளியே விடுங்கள்","Breathe out"],
+ bStart:["தொடங்கு","Start"], bStop:["நிறுத்து","Stop"], rounds:["சுற்றுகள்","Rounds"], bReady:["தயாரா?","Ready?"],
+ // Family
+ famTitle:["குடும்பப் பகுதி","Family corner"],
+ famIntro:["காவல் பணியின் அழுத்தம் வீட்டிற்கும் வருகிறது. குடும்பத்தினரே பெரும்பாலும் முதலில் மாற்றத்தைக் கவனிக்கிறார்கள்.","The pressure of police work comes home too. Family members are often the first to notice a change."],
+ famH1:["கவனிக்க வேண்டிய அறிகுறிகள்","Signs to notice"],
+ famL1:[["அதிகமாக ஒதுங்கியிருத்தல் அல்லது பேசாமல் இருத்தல்","தூக்கப் பிரச்சினைகள் அல்லது தொடர்ந்த சோர்வு","அதிகமாக மது அருந்துதல் அல்லது இரவு முழுவதும் கைபேசியில் இருத்தல்","சிறிய விஷயங்களுக்குக் கோபம்","\"யாருக்கும் நான் தேவையில்லை\" போன்ற பேச்சு"],["Withdrawing or going quiet","Sleep problems or constant tiredness","Drinking more, or staying on the phone all night","Anger over small things","Saying things like \"nobody needs me\""]],
+ famH2:["எப்படி ஆதரவளிப்பது","How to support"],
+ famL2:[["நிகழ்வின் விவரங்களைக் கேட்டு வற்புறுத்தாமல், அமைதியாகக் கேளுங்கள்","வார விடுமுறையில் ஓய்வு நேரத்தைப் பாதுகாக்க உதவுங்கள்","ஆலோசனை பெறுவது பலவீனம் அல்ல என்று ஊக்குவியுங்கள்","உங்கள் சொந்த மன நலத்தையும் கவனித்துக் கொள்ளுங்கள்"],["Listen calmly without pushing for details of the incident","Help protect rest time on the weekly off","Encourage counselling — it is not a weakness","Look after your own well-being too"]],
+ famCall:["குடும்பத்தினரும் டெலி-மனஸ் 14416 ஐ இலவசமாக அழைக்கலாம். \"யாருக்கும் நான் தேவையில்லை\" போன்ற பேச்சைக் கேட்டால் தாமதிக்காமல் அழையுங்கள்.","Family members can also call Tele-MANAS 14416 free of charge. If you hear talk like \"nobody needs me\", call without delay."],
+ // Supervisor
+ supTitle:["மேற்பார்வையாளர் பார்வை","Supervisor view"],
+ supIntro:["SP / மாநில நலப் பிரிவுக்கான தொகுப்புக் குறிகாட்டிகள். தனிநபர் பெயர், மதிப்பெண் எதுவும் காட்டப்படாது.","Aggregate indicators for the SP or State Cell. No individual names or scores are ever shown."],
+ demo:["மாதிரித் தரவு — உண்மையான தரவு அல்ல","Demo data — not real figures"],
+ k1:["வார விடுமுறை கிடைத்தவர்கள்","Weekly-off compliance"], k2:["72 மணி நேரத்துக்குள் நலம் விசாரிப்பு","Incidents followed up within 72 h"], k3:["சுய மதிப்பீடு செய்தவர்கள்","Self-check uptake"], k4:["ஆலோசனைக் கோரிக்கைகள் (கடந்த மாதத்தை விட)","Counselling requests (vs last month)"],
+ byUnit:["அலகு வாரியாக — வார விடுமுறை","By unit — weekly-off compliance"],
+ hidden:["மறைக்கப்பட்டது: 10 பேருக்கும் குறைவு","Hidden: fewer than 10 personnel"],
+ kRule:["10 பேருக்கும் குறைவான குழுக்களின் தரவு எப்போதும் காட்டப்படாது — ஒருவரை அடையாளம் காண முடியாதபடி.","Groups with fewer than 10 personnel are never displayed, so no individual can be identified."],
+ persons:["பேர்","personnel"],
+ checklist:["DSP / SHO வாராந்திரச் சரிபார்ப்பு","Weekly DSP / SHO checklist"],
+ cl:[["வார விடுமுறை மறுக்கப்பட்டவர்களுக்கு மாற்று விடுப்பு உறுதி செய்தேன்","நெருக்கடி நிகழ்வில் இருந்த ஒவ்வொருவரிடமும் 72 மணி நேரத்துக்குள் பேசினேன்","குறைதீர் நேரத்தில் நேரில் கிடைத்தேன்","உதவி கேட்பவரைப் பொதுவில் கேலி செய்வதை அனுமதிக்கவில்லை"],["Ensured compensatory off where weekly off was denied","Spoke to everyone at a critical incident within 72 hours","Was personally available during the grievance hour","Did not allow anyone to be ridiculed for seeking help"]],
+ // Privacy
+ prTitle:["ரகசியத்தன்மை & உங்கள் தரவு","Privacy and your data"],
+ pr:[["உங்கள் பெயர், CPS எண், பதவி எதுவும் கேட்கப்படாது.","மனநலத் தகவல் ரகசியமானது — மனநலப் பராமரிப்புச் சட்டம் 2017, பிரிவு 23.","உங்கள் விருப்பமின்றி எந்தத் தகவலும் மேலதிகாரிக்குச் செல்லாது.","மேற்பார்வையாளர்கள் 10 பேருக்கு மேற்பட்ட குழுக்களின் தொகுப்பு எண்ணிக்கையை மட்டுமே பார்ப்பார்கள்.","இந்த மாதிரிச் செயலியில் அனைத்தும் உங்கள் சாதனத்தில் மட்டுமே சேமிக்கப்படுகிறது; எந்தச் சேவையகத்துக்கும் அனுப்பப்படுவதில்லை."],["You are never asked for your name, CPS number or rank.","Mental-health information is confidential — Mental Healthcare Act, 2017, Section 23.","Nothing reaches a superior officer without your choice.","Supervisors see only aggregate counts for groups larger than 10.","In this prototype, everything is stored only on your device and is never sent to a server."]],
+ clearData:["இந்தச் சாதனத்திலிருந்து என் தரவை அழி","Delete my data from this device"], cleared:["உங்கள் தரவு அழிக்கப்பட்டது","Your data has been deleted"],
+ confirmClear:["உங்கள் அனைத்துப் பதிவுகளும் அழிக்கப்படும். தொடரவா?","All your entries will be deleted. Continue?"],
+ about:["தமிழ்நாடு காவல் பயிற்சியகத் திட்ட அறிக்கை \"காவல் பணியில் மன நலம்\" (எஸ். ராமலிங்கம், DSP பயிற்சியாளர், 2026) இல் முன்மொழியப்பட்ட கருத்தின் செயல்விளக்க மாதிரி.","Working prototype of the concept proposed in the Tamil Nadu Police Academy project report \"Mental Health in Policing\" (S. Ramalingam, DSP trainee, 2026)."],
+ theme:["தோற்றம்","Appearance"], tAuto:["தானியங்கி","Auto"], tLight:["வெளிச்சம்","Light"], tDark:["இருள்","Dark"]
+};
+
+/* ---------------- State & storage ---------------- */
+const KEY='kaaval_nalam_v1';
+let S={lang:'both',theme:'auto',mood:null,checks:[],sleep:[],off:[],incident:null,requests:[]};
+try{const raw=localStorage.getItem(KEY); if(raw){S=Object.assign(S,JSON.parse(raw));}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const view={name:'home',step:0,answers:[],safety:null,chkDone:null,brOn:false};
+
+/* ---------------- Helpers ---------------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function L(k){const v=T[k]; if(!v) return k; return S.lang==='en'?v[1]:v[0];}
+function tx(k,cls=''){const v=T[k]; if(!v) return esc(k);
+  if(S.lang==='both') return `<span class="${cls}">${esc(v[0])}</span><span class="sub">${esc(v[1])}</span>`;
+  return `<span class="${cls}">${esc(S.lang==='en'?v[1]:v[0])}</span>`;}
+function arr(k){const v=T[k]; return S.lang==='en'?v[1]:v[0];}
+function listBoth(k){const ta=T[k][0],en=T[k][1];
+  return ta.map((x,i)=> S.lang==='both'?`<li>${esc(x)}<span class="sub">${esc(en[i])}</span></li>`:`<li>${esc(S.lang==='en'?en[i]:x)}</li>`).join('');}
+function toast(k){const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=L(k);document.body.appendChild(d);setTimeout(()=>d.remove(),2200);}
+const today=()=>new Date().toISOString().slice(0,10);
+function weekKey(d=new Date()){const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-day);const y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return x.getUTCFullYear()+'-'+String(Math.ceil(((x-y)/86400000+1)/7)).padStart(2,'0');}
+const I={
+ check:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>',
+ moon:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+ phone:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
+ cal:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+ alert:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
+ wind:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2M17.5 8a2.5 2.5 0 1 1 2 4H2"/></svg>',
+ home:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+ heart:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/></svg>',
+ chart:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>',
+ more:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>',
+ family:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a5 5 0 0 1 10 0v2M14 21v-1.5a4 4 0 0 1 7 0V21"/></svg>',
+ shield:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+ grid:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+ chev:'<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>',
+ lock:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
+};
+function face(kind){const c={good:'#3f7d58',okay:'#e8a33d',low:'#b8433a'}[kind];const mouth={good:'M11 21q5 5 10 0',okay:'M11 21h10',low:'M11 23q5-5 10 0'}[kind];
+ return `<svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="${c}"/><circle cx="11.5" cy="13" r="1.8" fill="#fff"/><circle cx="20.5" cy="13" r="1.8" fill="#fff"/><path d="${mouth}" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;}
+function row(icon,color,tk,sk,go){return `<button class="row" data-go="${go}"><span class="ico" style="background:${color}">${I[icon]}</span><span>${tx(tk,'t')}<span class="sub">${esc(L(sk))}${S.lang==='both'?' · '+esc(T[sk][1]):''}</span></span>${I.chev}</button>`;}
+function backBtn(to='home'){return `<button class="back" data-go="${to}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 6l-6 6 6 6"/></svg>${esc(L('back'))}</button>`;}
+
+/* ---------------- Views ---------------- */
+function vHome(){
+  let due='';
+  if(S.incident && S.incident.remind && Date.now()>=S.incident.remind){
+    due=`<div class="card" style="border-left:5px solid #e8a33d"><p>${tx('incDue')}</p><button class="btn saff" data-go="incident">${esc(L('tileIncident'))}</button></div>`;
+  }
+  const msg=S.mood?`<div class="moodmsg">${tx(S.mood==='good'?'moodGood':S.mood==='okay'?'moodOkay':'moodLow')}${S.mood==='low'?`<div class="two" style="margin-top:10px"><button class="btn" data-go="check">${esc(L('tileCheck'))}</button><button class="btn red" data-go="help">${esc(L('tileTalk'))}</button></div>`:''}${S.mood==='okay'?`<div style="margin-top:10px"><button class="btn sec" data-go="breath">${esc(L('doBreath'))}</button></div>`:''}</div>`:'';
+  return `${due}
+  <section class="greet" aria-labelledby="gh">
+    <h1 id="gh">${tx('greet')}</h1>
+    <p>${tx('howToday')}</p>
+    <div class="moods" role="group">
+      ${['good','okay','low'].map(m=>`<button class="mood" data-mood="${m}" aria-pressed="${S.mood===m}">${face(m)}${tx(m)}</button>`).join('')}
+    </div>
+    ${msg}
+  </section>
+  <div class="list">
+    ${row('check','#1e2761','tileCheck','tileCheckS','check')}
+    ${row('moon','#2b3680','tileSleep','tileSleepS','log')}
+    ${row('phone','#2f7d7a','tileTalk','tileTalkS','help')}
+    ${row('cal','#8a7443','tileOff','tileOffS','log')}
+    ${row('alert','#b8433a','tileIncident','tileIncidentS','incident')}
+    ${row('wind','#c48a2e','tileBreath','tileBreathS','breath')}
+  </div>
+  <div class="lock">${I.lock}<span>${tx('lockLine')}</span></div>`;
+}
+
+const QS=['q1','q2','q3','q4','q5'];
+function vCheck(){
+  if(view.step===0){
+    const hist=S.checks.slice(-5).reverse().map(c=>`<div class="urow"><b>${c.score}</b> / 100 <span class="muted small">— ${esc(c.date)}</span></div>`).join('')||`<p class="muted">${esc(L('none'))}</p>`;
+    return `${backBtn()}<h1>${tx('chkTitle')}</h1><p>${tx('chkIntro')}</p>
+      <button class="btn" data-act="startCheck">${esc(L('start'))}</button>
+      <h2>${tx('history')}</h2><div class="card">${hist}</div>
+      <p class="muted small" style="margin-top:12px">${tx('notDiag')}</p>`;
+  }
+  if(view.step>=1 && view.step<=5){
+    const i=view.step-1, sel=view.answers[i];
+    const opts=[5,4,3,2,1,0].map(v=>`<button class="opt" data-ans="${v}" aria-pressed="${sel===v}"><span class="n">${v}</span><span>${tx('o'+v)}</span></button>`).join('');
+    return `${backBtn('check')}<div class="muted small">${esc(L('qOf'))} ${view.step} / 6</div>
+      <div class="progress" aria-hidden="true"><i style="width:${view.step/6*100}%"></i></div>
+      <p class="muted">${tx('lastTwo')}</p><div class="q">${tx(QS[i])}</div>
+      <div class="opts" role="group">${opts}</div>
+      <div class="two" style="margin-top:14px"><button class="btn sec" data-act="prevQ">${esc(L('prev'))}</button><button class="btn" data-act="nextQ" ${sel===undefined?'disabled':''}>${esc(L('next'))}</button></div>`;
+  }
+  if(view.step===6){
+    const s=view.safety;
+    const crisis=s==='yes'?crisisCard():'';
+    return `${backBtn('check')}<div class="muted small">${esc(L('qOf'))} 6 / 6</div>
+      <div class="progress" aria-hidden="true"><i style="width:100%"></i></div>
+      <div class="q">${tx('qSafety')}</div>
+      <div class="opts" role="group">${['no','yes','noSay'].map(k=>`<button class="opt" data-safety="${k}" aria-pressed="${s===k}"><span>${tx(k)}</span></button>`).join('')}</div>
+      ${crisis}
+      <div class="two" style="margin-top:14px"><button class="btn sec" data-act="prevQ">${esc(L('prev'))}</button><button class="btn" data-act="finish" ${s?'':'disabled'}>${esc(L('seeResult'))}</button></div>`;
+  }
+  return vResult();
+}
+function crisisCard(){
+  return `<div class="card crisis" role="alert"><h2>${tx('crisisH')}</h2><p>${tx('crisisP')}</p>
+   <div class="stack"><a class="btn red" href="tel:14416">${I.phone}${esc(L('callTM'))}</a><a class="btn sec" href="tel:112">${esc(L('call112'))}</a></div>
+   <p class="small" style="margin-top:10px">${tx('crisisDanger')}</p></div>`;
+}
+function vResult(){
+  const r=view.chkDone; const sc=r.score;
+  const band=sc>50?'Good':sc>28?'Mid':'Low';
+  const col=band==='Good'?'#3f7d58':band==='Mid'?'#e8a33d':'#b8433a';
+  const C=2*Math.PI*44, off=C*(1-sc/100);
+  return `${backBtn('check')}<h1>${tx('resTitle')}</h1>
+   ${r.safety==='yes'?crisisCard():''}
+   <div class="card"><div class="gauge">
+     <svg width="110" height="110" viewBox="0 0 110 110" role="img" aria-label="${sc} / 100"><circle cx="55" cy="55" r="44" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="55" cy="55" r="44" fill="none" stroke="${col}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 55 55)"/></svg>
+     <div><div class="score">${sc}</div><div class="muted">${esc(L('outOf'))}</div></div></div>
+     <h2 style="color:${col}">${tx('band'+band)}</h2><p>${tx('band'+band+'P')}</p>
+     <p class="muted small">${tx('notDiag')}</p></div>
+   <div class="stack">
+     ${band!=='Good'?`<button class="btn teal" data-go="callback">${esc(L('reqCall'))}</button><a class="btn sec" href="tel:14416">${esc(L('callTM'))}</a>`:''}
+     <button class="btn sec" data-go="breath">${esc(L('doBreath'))}</button>
+     <button class="btn sec" data-go="home">${esc(L('home'))}</button>
+   </div>`;
+}
+
+function helpRow(tk,sk,href,color,icon){
+  const inner=`<span class="ico" style="background:${color}">${I[icon]}</span><span>${tx(tk,'t')}<span class="sub">${esc(L(sk))}${S.lang==='both'?' · '+esc(T[sk][1]):''}</span></span>`;
+  return href?`<a class="row" href="${href}" style="color:inherit;text-decoration:none">${inner}${I.chev}</a>`:`<div class="row">${inner}</div>`;
+}
+function vHelp(){
+  return `<h1>${tx('helpTitle')}</h1><p>${tx('helpIntro')}</p>
+   <div class="list">
+    ${helpRow('tmT','tmS','tel:14416','#2f7d7a','phone')}
+    ${helpRow('magT','magS',null,'#1e2761','heart')}
+    ${helpRow('eT','eS','tel:112','#b8433a','alert')}
+    ${helpRow('amT','amS','tel:108','#b8433a','phone')}
+    ${helpRow('hlT','hlS','tel:104','#8a7443','phone')}
+   </div>
+   <div class="stack"><button class="btn teal" data-go="callback">${esc(L('reqCall'))}</button></div>
+   <div class="lock">${I.lock}<span>${tx('lockLine')}</span></div>`;
+}
+const cb={who:'whoCoun',when:'e',topics:[]};
+function vCallback(){
+  if(view.ref){
+    return `${backBtn('help')}<h1>${tx('reqDone')}</h1><div class="card"><p>${tx('reqRef')}</p><div class="ref">${esc(view.ref)}</div></div>
+     <p class="muted small" style="margin-top:12px">${tx('protoNote')}</p>
+     <div class="stack"><a class="btn sec" href="tel:14416">${esc(L('callTM'))}</a><button class="btn sec" data-go="home">${esc(L('home'))}</button></div>`;
+  }
+  const chips=(group,keys,multi)=>keys.map(k=>{const on=multi?cb[group].includes(k):cb[group]===k;return `<button class="chip" data-chip="${group}" data-val="${k}" aria-pressed="${on}">${esc(L(k))}</button>`}).join('');
+  return `${backBtn('help')}<h1>${tx('cbTitle')}</h1><p>${tx('cbIntro')}</p>
+   <label class="f" for="alias">${tx('alias')}</label><input id="alias" type="text" maxlength="24" placeholder="${esc(L('aliasPh'))}" autocomplete="off">
+   <div class="f" style="font-weight:700;margin:14px 0 6px">${tx('who')}</div><div class="chips">${chips('who',['whoCoun','whoWO','whoPeer'])}</div>
+   <div class="f" style="font-weight:700;margin:14px 0 6px">${tx('when')}</div><div class="chips">${chips('when',['m','a','e','nt'])}</div>
+   <div class="f" style="font-weight:700;margin:14px 0 6px">${tx('topic')}</div><div class="chips">${chips('topics',['tWork','tSleep','tFam','tMoney','tAlc','tInc'],true)}</div>
+   <div class="stack" style="margin-top:18px"><button class="btn teal" data-act="sendReq">${esc(L('sendReq'))}</button></div>
+   <p class="muted small" style="margin-top:10px">${tx('protoNote')}</p>`;
+}
+
+function sleepChart(){
+  const d=S.sleep.slice(-7); if(!d.length) return `<p class="muted">${esc(L('none'))}</p>`;
+  const W=320,H=170,pad=26,bw=(W-pad*2)/7;
+  const y=v=>H-22-(v/16)*(H-40);
+  let bars='',pts=[],labels='';
+  d.forEach((e,i)=>{const x=pad+i*bw;
+    bars+=`<rect x="${x+bw*.2}" y="${y(e.h)}" width="${bw*.6}" height="${H-22-y(e.h)}" rx="3" fill="${e.h<6?'#b8433a':'#2b3680'}"/>`;
+    pts.push(`${x+bw/2},${y(e.d)}`);
+    labels+=`<text x="${x+bw/2}" y="${H-6}" font-size="10" text-anchor="middle" fill="currentColor">${e.date.slice(5)}</text>`;});
+  const grid=[0,4,8,12,16].map(v=>`<line x1="${pad}" x2="${W-6}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="4" y="${y(v)+3}" font-size="10" fill="currentColor">${v}</text>`).join('');
+  const avgH=(d.reduce((a,e)=>a+e.h,0)/d.length).toFixed(1), avgD=(d.reduce((a,e)=>a+e.d,0)/d.length).toFixed(1);
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(L('last7'))}" style="color:var(--muted)">${grid}${bars}<polyline points="${pts.join(' ')}" fill="none" stroke="#e8a33d" stroke-width="3"/>${d.map((e,i)=>`<circle cx="${pad+i*bw+bw/2}" cy="${y(e.d)}" r="3.5" fill="#e8a33d"/>`).join('')}${labels}</svg>
+   <div class="legend"><span><b style="background:#2b3680"></b>${esc(L('lgSleep'))}</span><span><b style="background:#e8a33d"></b>${esc(L('lgDuty'))}</span><span><b style="background:#b8433a"></b>&lt; 6 ${esc(L('hrs'))}</span></div>
+   <div class="two" style="margin-top:10px"><div class="kpi"><div class="muted small">${esc(L('avgSleep'))}</div><div class="v">${avgH}</div></div><div class="kpi"><div class="muted small">${esc(L('avgDuty'))}</div><div class="v">${avgD}</div></div></div>
+   ${avgH<6?`<p class="moodmsg" style="margin-top:10px">${tx('sleepWarn')}</p>`:''}`;
+}
+function offWeeks(){
+  const map={}; S.off.forEach(o=>map[o.week]=o.v);
+  const out=[]; const now=new Date();
+  for(let i=7;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-7*i);const k=weekKey(d);out.push({k,v:map[k]});}
+  return out;
+}
+function vLog(){
+  const ex=S.sleep.find(e=>e.date===today());
+  const wk=offWeeks(); const cur=wk[7].v;
+  const rated=wk.filter(w=>w.v); const rest=rated.filter(w=>w.v!=='offNo').length;
+  const col={offYes:'#3f7d58',offComp:'#e8a33d',offNo:'#b8433a'};
+  return `<h1>${tx('logTitle')}</h1>
+   <h2>${tx('sleepH')}</h2>
+   <div class="card">
+    <label class="f" for="sh">${tx('slept')}</label><input id="sh" type="number" min="0" max="16" step="0.5" inputmode="decimal" value="${ex?ex.h:''}">
+    <label class="f" for="sq">${tx('quality')}: <b id="sqv">${ex?ex.q:3}</b>/5</label><input id="sq" type="range" min="1" max="5" value="${ex?ex.q:3}">
+    <div class="legend" style="justify-content:space-between;margin-top:0"><span>${esc(L('qPoor'))}</span><span>${esc(L('qGood'))}</span></div>
+    <label class="f" for="dh">${tx('duty')}</label><input id="dh" type="number" min="0" max="24" step="0.5" inputmode="decimal" value="${ex?ex.d:''}">
+    <div class="stack"><button class="btn" data-act="saveSleep">${esc(L('saveEntry'))}</button></div>
+   </div>
+   <div class="card"><div style="font-weight:700">${tx('last7')}</div>${sleepChart()}</div>
+   <h2>${tx('offH')}</h2>
+   <div class="card">
+    <p style="font-weight:700">${tx('offQ')}</p>
+    <div class="chips">${['offYes','offComp','offNo'].map(k=>`<button class="chip" data-off="${k}" aria-pressed="${cur===k}">${esc(L(k))}</button>`).join('')}</div>
+    <div class="weeks" role="img" aria-label="${esc(L('offRate'))}">${wk.map((w,i)=>`<div class="wk" style="background:${w.v?col[w.v]:'var(--line)'};color:${w.v?'#fff':'var(--muted)'}" title="${w.k}">${esc(L('wk'))}${i+1}</div>`).join('')}</div>
+    <div class="legend"><span><b style="background:#3f7d58"></b>${esc(L('offYes'))}</span><span><b style="background:#e8a33d"></b>${esc(L('offComp'))}</span><span><b style="background:#b8433a"></b>${esc(L('offNo'))}</span></div>
+    <p style="margin-top:10px">${tx('offRate')}: <b>${rest} / ${rated.length||0}</b></p>
+    <p class="muted small">${tx('offNote')}</p>
+   </div>`;
+}
+
+let incTypes=[];
+function vIncident(){
+  if(view.incStage==='done'){
+    return `${backBtn()}<h1>${tx('incTitle')}</h1><div class="card"><p>${tx(view.incMsg)}</p></div><div class="stack"><button class="btn sec" data-go="home">${esc(L('home'))}</button></div>`;
+  }
+  if(view.incStage==='yes'){
+    return `${backBtn('incident')}<h1>${tx('incTitle')}</h1>
+     <div class="card"><div style="font-weight:700;margin-bottom:8px">${tx('incType')}</div>
+      <div class="chips">${['i1','i2','i3','i4','i5','i6'].map(k=>`<button class="chip" data-inc="${k}" aria-pressed="${incTypes.includes(k)}">${esc(L(k))}</button>`).join('')}</div></div>
+     <div class="card"><h2 style="margin-top:0">${tx('normalH')}</h2><ul class="tips">${listBoth('normalL')}</ul><p>${tx('normalP')}</p></div>
+     <h2>${tx('incWhat')}</h2>
+     <div class="stack">
+      <button class="btn sec" data-act="incFine">${esc(L('incFine'))}</button>
+      <button class="btn teal" data-act="incWO">${esc(L('incWO'))}</button>
+      <a class="btn red" href="tel:14416">${esc(L('callTM'))}</a>
+      <button class="btn sec" data-go="breath">${esc(L('doBreath'))}</button>
+     </div>`;
+  }
+  return `${backBtn()}<h1>${tx('incTitle')}</h1><div class="card"><p class="q" style="font-size:19px">${tx('incQ')}</p>
+   <div class="two"><button class="btn" data-act="incYes">${esc(L('yes'))}</button><button class="btn sec" data-act="incNo">${esc(L('no'))}</button></div></div>
+   <div class="lock">${I.lock}<span>${tx('lockLine')}</span></div>`;
+}
+
+let brTimer=null, brPhase=0, brCount=4, brRounds=0;
+function vBreath(){
+  const phases=['bIn','bHold','bOut','bHold'];
+  const label=view.brOn?`${esc(L(phases[brPhase]))}<br><span style="font-size:40px">${brCount}</span>`:esc(L('bReady'));
+  return `${backBtn()}<h1>${tx('brTitle')}</h1><p>${tx('brIntro')}</p>
+   <div class="breath"><div class="circle ${view.brOn&&(brPhase===0||brPhase===1)?'big':''}" id="circle" aria-live="polite">${label}</div></div>
+   <p style="text-align:center">${esc(L('rounds'))}: <b id="rounds">${brRounds}</b></p>
+   <div class="stack">${view.brOn?`<button class="btn red" data-act="brStop">${esc(L('bStop'))}</button>`:`<button class="btn saff" data-act="brStart">${esc(L('bStart'))}</button>`}</div>`;
+}
+function brTick(){
+  brCount--;
+  if(brCount===0){brCount=4;brPhase=(brPhase+1)%4;if(brPhase===0)brRounds++;}
+  const c=$('#circle'); if(!c){clearInterval(brTimer);view.brOn=false;return;}
+  const phases=['bIn','bHold','bOut','bHold'];
+  c.innerHTML=`${esc(L(phases[brPhase]))}<br><span style="font-size:40px">${brCount}</span>`;
+  c.classList.toggle('big',brPhase===0||brPhase===1);
+  $('#rounds').textContent=brRounds;
+}
+
+function vFamily(){
+  return `${backBtn('more')}<h1>${tx('famTitle')}</h1><p>${tx('famIntro')}</p>
+   <div class="card"><h2 style="margin-top:0">${tx('famH1')}</h2><ul class="tips">${listBoth('famL1')}</ul></div>
+   <div class="card"><h2 style="margin-top:0">${tx('famH2')}</h2><ul class="tips">${listBoth('famL2')}</ul></div>
+   <div class="card" style="border-left:5px solid #2f7d7a"><p>${tx('famCall')}</p><a class="btn teal" href="tel:14416">${esc(L('callTM'))}</a></div>`;
+}
+
+function vSup(){
+  const units=[['காவல் நிலையம் A','Station A',42,78],['காவல் நிலையம் B','Station B',35,46],['ஆயுதப்படை கம்பெனி','Armed Reserve Coy',64,31],['போக்குவரத்துப் பிரிவு','Traffic wing',27,62],['அனைத்து மகளிர் காவல் நிலையம்','All Women PS',8,null],['சைபர் குற்றப் பிரிவு','Cyber crime cell',6,null]];
+  const kp=[['k1','61%','#b8433a'],['k2','88%','#e8a33d'],['k3','74%','#2b3680'],['k4','+12','#3f7d58']];
+  return `${backBtn('more')}<h1>${tx('supTitle')}</h1><p>${tx('supIntro')}</p><span class="tag">${esc(L('demo'))}</span>
+   <div class="kpis">${kp.map(k=>`<div class="kpi"><div class="v" style="color:${k[2]}">${k[1]}</div><div class="small muted">${esc(L(k[0]))}</div></div>`).join('')}</div>
+   <h2>${tx('byUnit')}</h2><div class="card">
+   ${units.map(u=>{const name=S.lang==='en'?u[1]:S.lang==='ta'?u[0]:u[0]+' / '+u[1];
+     return `<div class="urow"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(name)}</b><span class="muted small">${u[2]} ${esc(L('persons'))}</span></div>
+     ${u[3]===null?`<div class="small" style="color:var(--red);font-weight:700">${esc(L('hidden'))}</div>`:`<div class="bar"><i style="width:${u[3]}%;background:${u[3]<50?'#b8433a':u[3]<70?'#e8a33d':'#3f7d58'}"></i></div><div class="small muted">${u[3]}%</div>`}</div>`}).join('')}
+   </div>
+   <p class="muted small" style="margin-top:10px">${tx('kRule')}</p>
+   <h2>${tx('checklist')}</h2><div class="card">
+   ${T.cl[0].map((x,i)=>`<label style="display:flex;gap:10px;align-items:flex-start;padding:8px 0"><input type="checkbox" style="width:22px;height:22px;margin-top:2px;accent-color:#1e2761"><span>${S.lang==='en'?esc(T.cl[1][i]):esc(x)}${S.lang==='both'?`<span class="sub">${esc(T.cl[1][i])}</span>`:''}</span></label>`).join('')}
+   </div>`;
+}
+
+function vPrivacy(){
+  return `${backBtn('more')}<h1>${tx('prTitle')}</h1>
+   <div class="card"><ul class="tips">${listBoth('pr')}</ul></div>
+   <h2>${tx('theme')}</h2><div class="chips">${[['auto','tAuto'],['light','tLight'],['dark','tDark']].map(t=>`<button class="chip" data-theme-set="${t[0]}" aria-pressed="${S.theme===t[0]}">${esc(L(t[1]))}</button>`).join('')}</div>
+   <div class="stack" style="margin-top:18px"><button class="btn red" data-act="clear">${esc(L('clearData'))}</button></div>
+   <p class="muted small" style="margin-top:14px">${tx('about')}</p>`;
+}
+
+function vMore(){
+  return `<h1>${tx('navMore')}</h1><div class="list">
+   ${row('alert','#b8433a','tileIncident','tileIncidentS','incident')}
+   ${row('wind','#c48a2e','tileBreath','tileBreathS','breath')}
+   ${row('family','#2f7d7a','tileFamily','tileFamilyS','family')}
+   ${row('grid','#1e2761','tileSup','tileSupS','sup')}
+   ${row('shield','#3f7d58','tilePriv','tilePrivS','privacy')}
+  </div>`;
+}
+
+/* ---------------- Render ---------------- */
+const VIEWS={home:vHome,check:vCheck,help:vHelp,callback:vCallback,log:vLog,incident:vIncident,breath:vBreath,family:vFamily,sup:vSup,privacy:vPrivacy,more:vMore};
+const TAB_OF={home:'home',check:'check',help:'help',callback:'help',log:'log',incident:'more',breath:'more',family:'more',sup:'more',privacy:'more',more:'more'};
+function render(focus){
+  document.documentElement.lang=S.lang==='en'?'en':'ta';
+  if(S.theme==='auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme',S.theme);
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===S.lang));
+  $('#notice').innerHTML=tx('notice');
+  $('#main').innerHTML=VIEWS[view.name]();
+  const tabs=[['home','home','navHome'],['check','check','navCheck'],['help','phone','navHelp'],['log','chart','navLog'],['more','more','navMore']];
+  $('#tabs').innerHTML=tabs.map(t=>`<button data-go="${t[0]}" class="${t[0]==='help'?'help-tab':''}" ${TAB_OF[view.name]===t[0]?'aria-current="page"':''}>${I[t[1]]}<span>${esc(L(t[2]))}</span></button>`).join('');
+  if(focus){window.scrollTo(0,0);$('#main').focus({preventScroll:true});}
+}
+function go(name){
+  if(brTimer){clearInterval(brTimer);brTimer=null;view.brOn=false;}
+  if(name==='check'){view.step=0;view.answers=[];view.safety=null;}
+  if(name==='callback') view.ref=null;
+  if(name==='incident'){view.incStage=null;incTypes=[];}
+  view.name=name; render(true);
+}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.lang){S.lang=b.dataset.lang;save();render();return;}
+  if(b.dataset.go){go(b.dataset.go);return;}
+  if(b.dataset.mood){S.mood=b.dataset.mood;save();render();return;}
+  if(b.dataset.ans!==undefined){view.answers[view.step-1]=+b.dataset.ans;render();return;}
+  if(b.dataset.safety){view.safety=b.dataset.safety;render();return;}
+  if(b.dataset.chip){const g=b.dataset.chip,v=b.dataset.val; if(g==='topics'){const i=cb.topics.indexOf(v); i>=0?cb.topics.splice(i,1):cb.topics.push(v);} else cb[g]=v;
+    const alias=$('#alias')?$('#alias').value:''; render(); if($('#alias'))$('#alias').value=alias; return;}
+  if(b.dataset.off){const k=weekKey();S.off=S.off.filter(o=>o.week!==k);S.off.push({week:k,v:b.dataset.off});save();render();toast('saved');return;}
+  if(b.dataset.inc){const i=incTypes.indexOf(b.dataset.inc); i>=0?incTypes.splice(i,1):incTypes.push(b.dataset.inc); render(); return;}
+  if(b.dataset.themeSet){S.theme=b.dataset.themeSet;save();render();return;}
+  const a=b.dataset.act;
+  if(a==='startCheck'){view.step=1;render(true);}
+  else if(a==='nextQ'){view.step++;render(true);}
+  else if(a==='prevQ'){view.step=Math.max(view.step===1?0:1,view.step-1);render(true);}
+  else if(a==='finish'){const raw=view.answers.reduce((x,y)=>x+y,0);const score=raw*4;view.chkDone={score,safety:view.safety};S.checks.push({date:today(),score});S.checks=S.checks.slice(-30);save();view.step=7;render(true);}
+  else if(a==='sendReq'){view.ref='KN-'+Math.random().toString(36).slice(2,6).toUpperCase();S.requests.push({ref:view.ref,date:today(),who:cb.who,when:cb.when});save();render(true);}
+  else if(a==='saveSleep'){
+    const h=parseFloat($('#sh').value), d=parseFloat($('#dh').value), q=+$('#sq').value;
+    if(isNaN(h)||isNaN(d)||h<0||h>16||d<0||d>24){$('#sh').focus();return;}
+    S.sleep=S.sleep.filter(x=>x.date!==today());S.sleep.push({date:today(),h,d,q});S.sleep.sort((x,y)=>x.date<y.date?-1:1);S.sleep=S.sleep.slice(-60);save();render();toast('saved');}
+  else if(a==='incYes'){view.incStage='yes';render(true);}
+  else if(a==='incNo'){view.incStage='done';view.incMsg='incNoMsg';render(true);}
+  else if(a==='incFine'){S.incident={date:Date.now(),types:incTypes.slice(),remind:Date.now()+7*86400000};save();view.incStage='done';view.incMsg='incRemind';render(true);}
+  else if(a==='incWO'){S.incident={date:Date.now(),types:incTypes.slice(),remind:null};cb.who='whoWO';cb.topics=['tInc'];save();view.name='callback';view.ref=null;render(true);}
+  else if(a==='brStart'){view.brOn=true;brPhase=0;brCount=4;brRounds=0;render();brTimer=setInterval(brTick,1000);}
+  else if(a==='brStop'){clearInterval(brTimer);brTimer=null;view.brOn=false;render();}
+  else if(a==='clear'){if(confirm(L('confirmClear'))){const lang=S.lang;S={lang,theme:'auto',mood:null,checks:[],sleep:[],off:[],incident:null,requests:[]};try{localStorage.removeItem(KEY);}catch(e){}save();render();toast('cleared');}}
+});
+document.addEventListener('input',e=>{if(e.target.id==='sq'){const v=$('#sqv'); if(v) v.textContent=e.target.value;}});
+render();
+</script>
+</body>
+</html>
